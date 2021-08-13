@@ -16,5 +16,5 @@ pip install -r requirements.txt
 ``` sh
 export FLASK_APP=app
 export FLASK_ENV=development
-export DATABASE_URL="postgresql:///<string de conexão aqui>"
+export DATABASE_URL="sqlite:////tmp/test.db"
 ```
