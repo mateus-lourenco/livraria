@@ -18,3 +18,8 @@ export FLASK_APP=app
 export FLASK_ENV=development
 export DATABASE_URL="sqlite:////tmp/test.db"
 ```
+
+### EXECUTE
+``` sh
+flask run
+```
