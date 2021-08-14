@@ -1,4 +1,6 @@
 from api.utils.database import db
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+from marshmallow import fields
 
 class Livro(db.Model):
     __tablename__ = 'livros'
@@ -17,4 +19,14 @@ class Livro(db.Model):
         db.session.add(self)
         db.session.commit()
         return self
+    
+class LivroSchema(SQLAlchemyAutoSchema):
+    class Meta(SQLAlchemyAutoSchema.Meta):
+        model = Livro
+        sqla_session = db.session
+    
+    id = fields.Number(dump_only=True)
+    titulo = fields.String(required=True)
+    ano = fields.Integer(required=True)
+    autor_id = fields.Integer()
 
