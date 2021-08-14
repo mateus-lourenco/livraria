@@ -1,25 +1,44 @@
 from flask import Flask
-from flask_migrate import Migrate
+from flask import jsonify
 from api.config import config
 from api.utils.database import db
-#from .models import configure as config_db
-#from .serializer import configure as config_ma
-#from .livro import bp_livro
+from api.utils.responses import response_with
+import api.utils.responses as resp
 
-def create_app(config):
-    app = Flask(__name__)
-    app.config.from_object(config)
+app = Flask(__name__)
+
+app.config.from_object(config.get_config())
     
-    db.init_app(app)
-    
-    Migrate(app, app.db)
-    
-    #app.register_blueprint(bp_livro)
-    with app.app_context():
-        db.create_all()
-    
-    return app
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
+
+# START GLOBAL HTTP CONFIGURATIONS
+@app.after_request
+def add_header(response):
+    return response
+
+@app.errorhandler(400)
+def bad_request(e):
+    #logging.error(e)
+    return response_with(resp.BAD_REQUEST_400)
+
+@app.errorhandler(500)
+def server_error(e):
+    #logging.error(e)
+    return response_with(resp.SERVER_ERROR_500)
+
+@app.errorhandler(404)
+def not_found(e):
+    #logging.error(e)
+    return response_with(resp.SERVER_ERROR_404)
+
+db.init_app(app)
+
+with app.app_context():
+    db.create_all()
     
 if __name__=="__main__":
-    create_app.run(port=5000, host="0.0.0.0", use_reloader=False)
+    app.run(port=5000, host="0.0.0.0", use_reloader=False)
     
