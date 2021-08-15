@@ -8,7 +8,7 @@ class Autor(db.Model):
     __tablename__ = 'autores'
 
     id = db.Column(db.Integer, primary_key=True,
-                autorincrement=True)
+                autoincrement=True)
     nome = db.Column(db.String(100))
     livros = db.relationship('Livro', backref='Autor',
                             cascade="all, delete-orphan")
@@ -31,4 +31,4 @@ class AutorSchema(SQLAlchemyAutoSchema):
     id = fields.Number(dump_only=True)
     nome = fields.String(required=True)
     livros = fields.Nested(LivroSchema, many=True,
-                        only=['title', 'year', 'id'])
+                        only=['titulo', 'ano', 'id'])

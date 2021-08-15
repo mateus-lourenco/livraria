@@ -14,7 +14,7 @@ pip install -r requirements.txt
 ### VARIÁVEIS DE AMBIENTE
 
 ``` sh
-export FLASK_APP=app
+export FLASK_APP=run
 export FLASK_ENV=development
 export DATABASE_URL="sqlite:////tmp/test.db"
 ```

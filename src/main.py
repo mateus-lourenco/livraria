@@ -4,6 +4,7 @@ from api.config import config
 from api.utils.database import db
 from api.utils.responses import response_with
 import api.utils.responses as resp
+from api.routes.autores import autor_routes
 
 app = Flask(__name__)
 
@@ -13,6 +14,8 @@ db.init_app(app)
 
 with app.app_context():
     db.create_all()
+    
+app.register_blueprint(autor_routes, url_prefix='/api/autores')
 
 # START GLOBAL HTTP CONFIGURATIONS
 @app.after_request
