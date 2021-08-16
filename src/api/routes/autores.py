@@ -12,8 +12,6 @@ def create():
     try:
         data = request.get_json()
         autor_schema = AutorSchema()
-        import ipdb; ipdb.set_trace()
-        autor = Autor()
         autor, error = autor_schema.load(data)
         result = autor_schema.dump(autor.create()).data
         return response_with(resp.SUCCESS_201, 
