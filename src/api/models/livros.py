@@ -21,7 +21,7 @@ class Livro(db.Model):
         return self
     
 class LivroSchema(SQLAlchemyAutoSchema):
-    class Meta(SQLAlchemyAutoSchema.Meta):
+    class Meta:
         model = Livro
         sqla_session = db.session
     
