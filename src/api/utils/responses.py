@@ -59,3 +59,18 @@ UNAUTHORIZED_403 = {
     "code": "notAuthorized",
     "message": "You are not authorised to execute this."
 }
+
+SUCCESS_200 = {
+    'http_code': 200,
+    'code': 'success'
+}
+
+SUCCESS_201 = {
+    'http_code': 201,
+    'code': 'success'
+}
+
+SUCCESS_204 = {
+    'http_code': 204,
+    'code': 'success'
+}

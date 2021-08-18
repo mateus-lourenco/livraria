@@ -12,8 +12,8 @@ def create():
     try:
         data = request.get_json()
         autor_schema = AutorSchema()
-        autor, error = autor_schema.load(data)
-        result = autor_schema.dump(autor.create()).data
+        autor = Autor(nome=data["nome"], livros=data["livros"])
+        result = autor_schema.dump(autor.create())
         return response_with(resp.SUCCESS_201, 
                             value={"autor":result})
     except Exception as e:
@@ -23,8 +23,7 @@ def create():
 @autor_routes.route('/', methods=['GET'])
 def list():
     fetched = Autor.query.all()
-    autor_schema = AutorSchema(many=True, only=['first_name',
-                                                'last_name','id'])
+    autor_schema = AutorSchema(many=True, only=['nome','id'])
     autores, error = autor_schema.dump(fetched)
     return response_with(resp.SUCCESS_200, value={"autores":autores})
 

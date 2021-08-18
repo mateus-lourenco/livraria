@@ -14,7 +14,7 @@ class Autor(db.Model):
     livros = db.relationship('Livro', backref='Autor',
                             cascade="all, delete-orphan")
 
-    def __init__(self, nome, livros=[]):
+    def __init__(self, nome, livros=list()):
         self.nome = nome
         self.livros = livros
 
