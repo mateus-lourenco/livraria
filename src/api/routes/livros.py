@@ -9,10 +9,8 @@ livro_routes = Blueprint("livro_routes", __name__)
 @livro_routes.route('/', methods=['POST'])
 def create():
     try:
-        import ipdb
         data = request.get_json()
         livro_schema = LivroSchema()
-        ipdb.set_trace()
         livro = livro_schema.load(data)
         result = livro_schema.dump(livro.create())
         return response_with(resp.SUCCESS_201, 
