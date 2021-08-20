@@ -10,10 +10,10 @@ class Livro(db.Model):
     ano_publicacao = db.Column(db.Integer)
     autor_id = db.Column(db.Integer, db.ForeignKey('autores.id'))
 
-    def __init__(self, title, year, author_id=None):
-        self.title = title
-        self.year = year
-        self.author_id = author_id
+    def __init__(self, titulo, ano, autor_id=None):
+        self.titulo = titulo
+        self.ano = ano
+        self.autor_id = autor_id
 
     def create(self):
         db.session.add(self)

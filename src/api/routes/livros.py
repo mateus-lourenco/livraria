@@ -9,9 +9,11 @@ livro_routes = Blueprint("livro_routes", __name__)
 @livro_routes.route('/', methods=['POST'])
 def create():
     try:
+        import ipdb
         data = request.get_json()
         livro_schema = LivroSchema()
-        livro = Livro(nome=data["nome"], livros=data["livros"])
+        ipdb.set_trace()
+        livro = livro_schema.load(data)
         result = livro_schema.dump(livro.create())
         return response_with(resp.SUCCESS_201, 
                             value={"livro":result})
@@ -26,7 +28,7 @@ def list():
     livros, error = livro_schema.dump(fetched)
     return response_with(resp.SUCCESS_200, value={"livros":livros})
 
-livro_routes.route('/<int:autor_id>', methods=['GET'])
+@livro_routes.route('/<int:autor_id>', methods=['GET'])
 def get(autor_id):
     fetched = Livro.query.get_or_404(autor_id)
     livro_schema = LivroSchema()

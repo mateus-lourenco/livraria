@@ -24,13 +24,12 @@ def create():
 def list():
     fetched = Autor.query.all()
     autor_schema = AutorSchema(many=True, only=['nome','id'])
-    autores, error = autor_schema.dump(fetched)
+    autores = autor_schema.dump(fetched)
     return response_with(resp.SUCCESS_200, value={"autores":autores})
 
-autor_routes.route('/<int:autor_id>', methods=['GET'])
+@autor_routes.route('/<int:autor_id>', methods=['GET'])
 def get(autor_id):
     fetched = Autor.query.get_or_404(autor_id)
     autor_schema = AutorSchema()
-    autor, error = autor_schema.dump(fetched)
+    autor = autor_schema.dump(fetched)
     return response_with(resp.SUCCESS_200, value={"autor":autor})
-
