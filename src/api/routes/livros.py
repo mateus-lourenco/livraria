@@ -32,3 +32,36 @@ def get(autor_id):
     livro_schema = LivroSchema()
     livro, error = livro_schema.dump(fetched)
     return response_with(resp.SUCCESS_200, value={"livro":livro})
+
+@livro_routes.route('/<int:id>', methods=['PUT'])
+def update(id):
+    data = request.get_json()
+    get_livro = Livro.query.get_or_404(id)
+    get_livro.titulo = data['titulo']
+    get_livro.ano = data['ano']
+    db.session.add(get_livro)
+    db.session.commit()
+    livro_schema = LivroSchema()
+    livro = livro_schema.dump(get_livro)
+    return response_with(resp.SUCCESS_200, value={"livro": livro})
+
+@livro_routes.route('/<int:id>', methods=['PATCH'])
+def modify(id):
+    data = request.get_json()
+    get_livro = Livro.query.get_or_404(id)
+    if data.get('titulo'):
+        get_livro.titulo = data['titulo']
+    if data.get('ano'):
+        get_livro.ano = data['ano']
+    db.session.add(get_livro)
+    db.session.commit()
+    livro_schema = LivroSchema()
+    livro = livro_schema.dump(get_livro)
+    return response_with(resp.SUCCESS_200, value={"livro": livro})
+
+@livro_routes.route('/<int:id>', methods=['DELETE'])
+def delete(id):
+    get_livro = Livro.query.get_or_404(id)
+    db.session.delete(get_livro)
+    db.session.commit()
+    return response_with(resp.SUCCESS_204)
