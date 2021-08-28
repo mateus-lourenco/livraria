@@ -12,7 +12,10 @@ def create():
     try:
         data = request.get_json()
         autor_schema = AutorSchema()
-        autor = Autor(nome=data["nome"], livros=data["livros"])
+        autor = Autor(nome=data.get("nome"), 
+                    livros=data.get("livros"))
+        import ipdb
+        ipdb.set_trace()
         result = autor_schema.dump(autor.create())
         return response_with(resp.SUCCESS_201, 
                             value={"autor":result})
