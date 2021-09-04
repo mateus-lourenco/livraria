@@ -4,18 +4,18 @@ from api.utils.responses import response_with
 from api.utils import responses as resp 
 from api.models.autores import Autor, AutorSchema
 from api.utils.database import db 
+from flask_jwt_extended import jwt_required
 
 autor_routes = Blueprint("autor_routes", __name__)
 
 @autor_routes.route("/", methods=["POST"])
+@jwt_required
 def create():
     try:
         data = request.get_json()
         autor_schema = AutorSchema()
         autor = Autor(nome=data.get("nome"), 
                     livros=data.get("livros"))
-        import ipdb
-        ipdb.set_trace()
         result = autor_schema.dump(autor.create())
         return response_with(resp.SUCCESS_201, 
                             value={"autor":result})
@@ -38,6 +38,7 @@ def get(autor_id):
     return response_with(resp.SUCCESS_200, value={"autor":autor})
 
 @autor_routes.route("/<int:autor_id>", methods=["PUT"])
+@jwt_required
 def update(autor_id):
     data = request.get_json()
     get_autor = Autor.query.get_or_404(autor_id)
@@ -49,6 +50,7 @@ def update(autor_id):
     return response_with(resp.SUCCESS_200, value={"autor":autor})
 
 @autor_routes.route("/<int:autor_id>", methods=["PATCH"])
+@jwt_required
 def modify(autor_id):
     data = request.get_json()
     get_autor = Autor.query.get_or_404(autor_id)
@@ -61,6 +63,7 @@ def modify(autor_id):
     return response_with(resp.SUCCESS_200, value={"autor": autor})
 
 @autor_routes.route('/<int:autor_id>', methods=["DELETE"])
+@jwt_required
 def remove(autor_id):
     get_autor = Autor.query.get_or_404(autor_id)
     db.session.delete(get_autor)
