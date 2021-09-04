@@ -8,14 +8,16 @@ from api.utils.responses import response_with
 import api.utils.responses as resp
 from api.routes.autores import autor_routes
 from api.routes.livros import livro_routes
+from api.routes.users import user_routes
+from flask_jwt_extended import JWTManager
 
 
 def create_app(config):
     app = Flask(__name__)
-
     app.config.from_object(config_env.get_config())
-
     db.init_app(app)
+    
+    jwt = JWTManager(app)   
 
     app.db = db
 
@@ -24,6 +26,7 @@ def create_app(config):
 
     app.register_blueprint(autor_routes, url_prefix='/api/autores')
     app.register_blueprint(livro_routes, url_prefix='/api/livros')
+    app.register_blueprint(user_routes, url_prefix='/api/users')
 
     # START GLOBAL HTTP CONFIGURATIONS
     @app.after_request
