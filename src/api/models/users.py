@@ -25,3 +25,11 @@ class User(db.Model):
     @staticmethod
     def verify_hash(password, hash):
         return sha256.verify(password, hash)
+
+class UserSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = User 
+        sqla_session = db.session
+        
+    id = fields.Number(dump_only=True)
+    username = fields.String(required=True)
