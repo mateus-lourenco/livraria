@@ -1,5 +1,5 @@
 import os
-from .secrets import key
+from .secrets import SECRET_KEY, SECURITY_PASSWORD_SALT
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -8,7 +8,8 @@ class Config(object):
     DEBUG = False
     TESTING = False
     CSRF_ENABLED = True
-    SECRET_KEY = key()
+    SECRET_KEY = SECRET_KEY
+    SECURITY_PASSWORD_SALT = SECURITY_PASSWORD_SALT
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
